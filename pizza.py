@@ -1,13 +1,15 @@
 from random import randint
+from typing import Callable
+
 
 class Pizza:
     """
     Базовый класс для пиццы.
     Характеристики рецепта пиццы:
-    1) ингридиенты 
-    2) название 
+    1) ингридиенты
+    2) название
     3) logo
-    Характеристика инстанса пиццы: 
+    Характеристика инстанса пиццы:
     1) размер
     Методы:
     1) вывести словарь со всей информацией
@@ -16,15 +18,15 @@ class Pizza:
     name = ""
     ingredients = []
     logo = ""
-
     SIZEZ = ["L", "XL"]
 
-    def __init__(self, size = "L"):
+    def __init__(self, size="L"):
         """
         Создает инстанс пиццы и определяет единсвенную хар-ку -- размер
         """
         if size.upper() not in self.__class__.SIZEZ:
-            raise ValueError(f"Please choose one of the following options: {self.__class__.SIZEZ}")
+            raise ValueError(f"Please choose one of \
+                the following options: {self.__class__.SIZEZ}")
         self.size = size.upper()
 
     def dict(self) -> dict:
@@ -38,23 +40,21 @@ class Pizza:
             "size": self.size
         }
 
-     
-
     def __eq__(self, other: object) -> bool:
         """
-        Считаем что две пиццы одинаковы, 
+        Считаем что две пиццы одинаковы,
         если они из одного класса и одного размера
         """
         return (
             type(self) == type(other)
-            and (self.size, set(self.ingredients)) == (other.size, set(other.ingredients))
-            # нужно ли проверять ингридиенты??
+            and (self.size, set(self.ingredients))
+            == (other.size, set(other.ingredients))
         )
 
 
 class Margherita(Pizza):
     """
-    Маргарита
+    Класс для Маргариты
     """
     ingredients = ["tomato sauce", "mozzarella", "tomatoes"]
     logo = "🧀"
@@ -63,25 +63,23 @@ class Margherita(Pizza):
 
 class Pepperoni(Pizza):
     """
-    Пепперони
+    Класс для Пепперони
     """
-
     ingredients = ["tomato sauce", "mozzarella", "pepperoni"]
     logo = "🍕"
     name = "Pepperoni"
 
 
 class Hawaiian(Pizza):
-    """гавайская пицца"""
-
+    """
+    Класс для Гавайской пиццы
+    """
     ingredients = ["tomato sauce", "mozzarella", "chicken", "pineapples"]
     logo = "🍍"
     name = "Hawaiian"
 
 
-
-
-def log(foo):
+def log(foo: Callable) -> Callable:
     """
     Декоратор, который печатает название функции и случайное число
     Сама функция не вызывается
@@ -91,18 +89,18 @@ def log(foo):
         print(f"{foo.__name__} -- {random_time} c")
     return wrapper
 
-def apply_transform(text_str):
+
+def apply_transform(text_str: str) -> Callable:
     """
-    Параметризованный декоратор, который подставляет 
+    Параметризованный декоратор, который подставляет
     случайное число в передаваемый шаблон.
-    Сама функция не вызывается
+    Передаваемая функция не вызывается.
     """
     def decorator(foo):
         def wrapper(*args, **kwargs):
-            print(text_str.format(randint(1, 10)))
+            print(text_str.format(randint(0, 10)))
         return wrapper
     return decorator
-
 
 
 @log
@@ -110,20 +108,24 @@ def bake(pizza: Pizza) -> None:
     """Готовит пиццу"""
     pass
 
+
 @apply_transform("🧑‍🍳Приготовили за {}с!")
 def beautiful_bake(pizza: Pizza) -> None:
-    """Готовит пиццу"""
+    """Готовит пиццу, но красиво печатет о завершении готовки"""
     pass
+
 
 @apply_transform("🚚 Доставили за {}с!")
 def beautiful_delivery(pizza: Pizza) -> None:
     """Доставляет пиццу"""
     pass
 
+
 @apply_transform("🏠 Забрали за {}с!")
 def beautiful_pickup(pizza: Pizza) -> None:
-    """Осуществляет пиццу"""
+    """Самовывоз"""
     pass
+
 
 if __name__ == '__main__':
     a = Hawaiian()
@@ -138,3 +140,4 @@ if __name__ == '__main__':
     beautiful_bake(b)
     beautiful_delivery()
     beautiful_pickup()
+    print(a.dict())

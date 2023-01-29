@@ -4,7 +4,6 @@ import pizza
 list_of_recipes = pizza.Pizza.__subclasses__()
 
 
-
 @click.group()
 def cli():
     pass
@@ -13,7 +12,7 @@ def cli():
 @cli.command()
 @click.option('--delivery', default=False, is_flag=True)
 @click.argument('recipe', nargs=1)
-def order(recipe: str, delivery: bool):
+def order(recipe: str, delivery: bool) -> None:
     """Готовит и доставляет пиццу"""
     pizza.beautiful_bake()
     if delivery:
@@ -24,18 +23,16 @@ def order(recipe: str, delivery: bool):
     mark = int(input())
     print(f'Ваша оценка: {"⭐"*mark}, спасибо за заказ!')
 
+
 @cli.command()
-def menu():
+def menu() -> None:
     """Выводит меню"""
     for recipe in list_of_recipes:
-        print('- ', recipe.name, recipe.logo, ':', ', '.join(recipe.ingredients))
-
-
+        print('- ', recipe.name, recipe.logo,
+              ':', ', '.join(recipe.ingredients))
 
 
 if __name__ == '__main__':
     cli()
-
     order()
     menu()
-

@@ -1,0 +1,16 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.10.6, pytest-7.2.0, pluggy-1.0.0 -- /opt/homebrew/opt/python@3.10/bin/python3.10
+cachedir: .pytest_cache
+rootdir: /Users/andreytarasov/AAA_python_final
+plugins: cov-4.0.0
+collecting ... collected 7 items
+
+tests.py::test_pizza[some_pizza0-expected_value0] PASSED                 [ 14%]
+tests.py::test_pizza[some_pizza1-expected_value1] PASSED                 [ 28%]
+tests.py::test_pizza[some_pizza2-expected_value2] PASSED                 [ 42%]
+tests.py::test_pizza[some_pizza3-expected_value3] PASSED                 [ 57%]
+tests.py::test_bake PASSED                                               [ 71%]
+tests.py::test_beautiful_bake PASSED                                     [ 85%]
+tests.py::test_beautiful_delivery PASSED                                 [100%]
+
+============================== 7 passed in 0.02s ===============================
