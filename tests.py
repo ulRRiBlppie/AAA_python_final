@@ -58,7 +58,7 @@ def test_bake(capfd):
     assert (
         1 == 1
         and out[:18] == "🧑‍🍳Приготовили за "
-        and 0 <= int(out[18]) <= 9
+        and 0 <= int(out[18]) <= 10
         and out[19:] == "с!\n"
     )
 
@@ -79,6 +79,6 @@ def test_beautiful_delivery(capfd):
 
 def test_beautiful_pickup(capfd):
     pizza.beautiful_pickup(pizza.Pepperoni)
-    out, = capfd.readouterr()
+    out, _ = capfd.readouterr()
     print(out)
     assert bool(re.match(r"🏠 Забрали за ([0-9]|10)с!", out))

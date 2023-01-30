@@ -85,6 +85,7 @@ def log(foo: Callable) -> Callable:
     Сама функция не вызывается
     """
     def wrapper(*args, **kwargs):
+        foo(*args, **kwargs)
         random_time = randint(1, 10)
         print(f"{foo.__name__} -- {random_time} c")
     return wrapper
@@ -99,6 +100,7 @@ def apply_transform(text_str: str) -> Callable:
     def decorator(foo):
         def wrapper(*args, **kwargs):
             print(text_str.format(randint(0, 10)))
+            foo(*args, **kwargs)
         return wrapper
     return decorator
 
@@ -127,7 +129,7 @@ def beautiful_pickup(pizza: Pizza) -> None:
     pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     a = Hawaiian()
     b = Pepperoni("L")
     c = Pepperoni("XL")
@@ -138,6 +140,4 @@ if __name__ == '__main__':
     print(c == b)
     bake(a)
     beautiful_bake(b)
-    beautiful_delivery()
-    beautiful_pickup()
     print(a.dict())
